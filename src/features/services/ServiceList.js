@@ -26,7 +26,7 @@ export default function ServiceList () {
         <Row xs={1} md={3} className="g-4">
           {services.list.map(service => 
             <Col key={`service-${service.id}`}>
-              <Service name={service.name} description={service.description} id={service.id}/>
+              <Service name={service.name} description={service.description} id={service.id} category={service.category}/>
             </Col>
           )}
         </Row>

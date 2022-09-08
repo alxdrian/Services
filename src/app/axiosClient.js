@@ -7,7 +7,7 @@ axiosClient.defaults.baseURL = settings.API_HOST
 
 axiosClient.defaults.headers = {
   'Content-Type': 'application/json',
-  Accept: 'application/json'
+  Accept: 'application/json',
 };
 
 axiosClient.defaults.timeout = 2000;

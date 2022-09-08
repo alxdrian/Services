@@ -1,18 +1,22 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { createService, deleteServiceById, getAllServices } from '../../api/serviceApi';
+import { createService, deleteServiceById, editServiceById, getAllServices } from '../../api/serviceApi';
+
+const initialForm = {
+  mode: { creation: true },
+  fields: {
+    name: 'nombre',
+    description: 'descripción',
+    category: 'cars',
+  },
+  selected: {}
+}
 
 const initialState = {
   services: {
     list: [],
     status: { idle: true }
   },
-  form: {
-    fields: {
-      name: '',
-      description: '',
-      category: '',
-    }
-  }
+  form: initialForm,
 }
 
 export const getAll = createAsyncThunk(
@@ -39,12 +43,32 @@ export const deleteService = createAsyncThunk(
   }
 )
 
+export const editService = createAsyncThunk(
+  'service/editService',
+  async(service) => {
+    const response = await editServiceById(service.id, service)
+    return response.data
+  }
+)
+
 const serviceSlice = createSlice({
   name: 'service',
   initialState,
   reducers: {
     setFormField: (state, action) => {
       state.form.fields[action.payload.field] = action.payload.value
+    },
+    setEditionMode: (state) => {
+      state.form.mode = { edition: true }
+    },
+    setCreationMode: (state) => {
+      state.form.mode = { creation: true }
+    },
+    setSelectedService: (state, action) => {
+      state.form.selected = action.payload
+    },
+    setResetForm: (state) => {
+      state.form = initialForm
     }
   },
   extraReducers: (builder) => {
@@ -74,9 +98,16 @@ const serviceSlice = createSlice({
       .addCase(deleteService.fulfilled, (state) => {
         state.services.status = { idle: true }
       })
+      // status fetch delete service
+      .addCase(editService.pending, (state) => {
+        state.services.status = { loading: true }
+      })
+      .addCase(editService.fulfilled, (state) => {
+        state.services.status = { idle: true }
+      })
   }
 })
 
-export const { setFormField } = serviceSlice.actions
+export const { setFormField, setEditionMode, setCreationMode, setSelectedService, setResetForm } = serviceSlice.actions
 
 export default serviceSlice.reducer

@@ -1,4 +1,4 @@
-import { getRequest, postRequest, patchRequest, deleteRequest } from './apiHandler'
+import { getRequest, postRequest, putRequest, deleteRequest } from './apiHandler'
 
 export function getAllServices () {
   return getRequest('services')
@@ -13,7 +13,7 @@ export function createService (service) {
 }
 
 export function editServiceById (id, service) {
-  return patchRequest(`services/${id}`, service)
+  return putRequest(`services/${id}`, service)
 }
 
 export function deleteServiceById (id) {

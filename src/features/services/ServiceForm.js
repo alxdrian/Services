@@ -3,12 +3,13 @@ import { useSelector, useDispatch } from 'react-redux';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import { addService, setFormField } from './serviceSlice';
+import { addService, editService, setFormField, setResetForm } from './serviceSlice';
 
 export default function ServiceForm () {
   const dispatch = useDispatch()
   const store = useSelector(state => state.service)
   const form = store.form.fields
+  const selectedService = store.form.selected
   const [validated, setValidated] = useState(false);
 
   const handleSubmit = (event) => {
@@ -17,9 +18,16 @@ export default function ServiceForm () {
     if (form.checkValidity() === false) {
       event.stopPropagation();
     }
-    if (form.checkValidity()) {
-      console.log(store.form.fields)
+    if (form.checkValidity() && store.form.mode.creation) {
       dispatch(addService(store.form.fields))
+      dispatch(setResetForm())
+    }
+    if (form.checkValidity() && store.form.mode.edition) {
+      dispatch(editService({
+        id: selectedService.id, 
+        ...store.form.fields
+      }))
+      dispatch(setResetForm())
     }
     setValidated(true);
   };
@@ -28,7 +36,7 @@ export default function ServiceForm () {
     <Card>
       <Form noValidate validated={validated} onSubmit={handleSubmit}>
         <Card.Body>
-          <Card.Title>Servicio</Card.Title>
+          <Card.Title>{store.form.mode.creation ? 'Crear Servicio' : `Editar ${selectedService.name}`}</Card.Title>
             <Form.Group className="mb-3" controlId="nameServiceForm">
               <Form.Label>Nombre</Form.Label>
               <Form.Control required type="text" value={form.name} onChange={(e) => dispatch(setFormField({field: 'name', value: e.target.value}))}/>
@@ -46,7 +54,6 @@ export default function ServiceForm () {
             <Form.Group className="mb-3" controlId="categoryServiceForm">
               <Form.Label>Categoría</Form.Label>
               <Form.Select required value={form.category} onChange={(e) => dispatch(setFormField({field: 'category', value: e.target.value}))}>
-                <option value="">Seleccione una categoría</option>
                 <option value="cars">Autos</option>
                 <option value="health">Salud</option>
                 <option value="home">Hogar</option>
@@ -58,14 +65,9 @@ export default function ServiceForm () {
         </Card.Body>
         <Card.Footer>
           <Button variant="outline-success" type="submit">Grabar</Button>
-          <Button variant="outline-danger">Cancelar</Button>
+          <Button variant="outline-danger" onClick={(e) => dispatch(setResetForm())}>Cancelar</Button>
         </Card.Footer>
       </Form>
-      {/* <div>
-        {form.name}
-        {form.description}
-        {form.category}
-      </div> */}
     </Card>    
   )
 }
