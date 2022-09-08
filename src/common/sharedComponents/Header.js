@@ -1,7 +1,9 @@
+import Container from 'react-bootstrap/Container';
+
 export default function Header () {
   return (
-    <header>
-      Servicios
-    </header>
+    <Container fluid className='text-center'>
+      <h1>Servicios</h1>
+    </Container>
   )
 }
