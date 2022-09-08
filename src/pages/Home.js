@@ -1,7 +1,9 @@
+import NavBar from "../common/sharedComponents/Navbar";
+
 export function Home () {
   return (
-    <div>
-      Home
-    </div>
+    <>
+      <NavBar />
+    </>
   )
 }
