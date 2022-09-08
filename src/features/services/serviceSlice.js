@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { createService, getAllServices } from '../../api/serviceApi';
+import { createService, deleteServiceById, getAllServices } from '../../api/serviceApi';
 
 const initialState = {
   services: {
@@ -31,6 +31,14 @@ export const addService = createAsyncThunk(
   }
 )
 
+export const deleteService = createAsyncThunk(
+  'service/deleteService',
+  async(id) => {
+    const response = await deleteServiceById(id)
+    return response.data
+  }
+)
+
 const serviceSlice = createSlice({
   name: 'service',
   initialState,
@@ -52,7 +60,18 @@ const serviceSlice = createSlice({
       .addCase(getAll.rejected, (state, action) => {
         state.services.status = { error: action.error }
       })
-      .addCase(addService.fulfilled, (state, action) => {
+      // status fetch add service
+      .addCase(addService.pending, (state) => {
+        state.services.status = { loading: true }
+      })
+      .addCase(addService.fulfilled, (state) => {
+        state.services.status = { idle: true }
+      })
+      // status fetch delete service
+      .addCase(deleteService.pending, (state) => {
+        state.services.status = { loading: true }
+      })
+      .addCase(deleteService.fulfilled, (state) => {
         state.services.status = { idle: true }
       })
   }

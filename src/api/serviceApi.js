@@ -12,10 +12,10 @@ export function createService (service) {
   return postRequest('services', service)
 }
 
-export function editService (id, service) {
+export function editServiceById (id, service) {
   return patchRequest(`services/${id}`, service)
 }
 
-export function deleteService (id) {
+export function deleteServiceById (id) {
   return deleteRequest(`services/${id}`)
 }
