@@ -35,6 +35,18 @@ export default function ServiceForm () {
                 Por favor indique una descripción.
               </Form.Control.Feedback>
             </Form.Group>
+            <Form.Group className="mb-3" controlId="categoryServiceForm">
+              <Form.Label>Categoría</Form.Label>
+              <Form.Select required>
+                <option value="">Seleccione una categoría</option>
+                <option value="cars">Autos</option>
+                <option value="health">Salud</option>
+                <option value="home">Hogar</option>
+              </Form.Select>
+              <Form.Control.Feedback type="invalid">
+                Por favor indique una categoría.
+              </Form.Control.Feedback>
+            </Form.Group>
         </Card.Body>
         <Card.Footer>
           <Button variant="outline-success" type="submit">Grabar</Button>
