@@ -3,6 +3,7 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import ServiceList from "../features/services/ServiceList";
+import ServiceForm from "../features/services/ServiceForm";
 
 export function Home () {
   return (
@@ -13,7 +14,9 @@ export function Home () {
           <Col xs={9}>
             <ServiceList></ServiceList>
           </Col>
-          <Col xs={3}>form</Col>
+          <Col xs={3}>
+            <ServiceForm />
+          </Col>
         </Row>
       </Container>
       

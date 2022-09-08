@@ -1,4 +1,5 @@
-import Card from 'react-bootstrap/Card'
+import Card from 'react-bootstrap/Card';
+import Button from 'react-bootstrap/Button';
 
 export default function Service () {
   return (
@@ -8,7 +9,8 @@ export default function Service () {
         <Card.Text>Lorem ipsum, dolor sit atmet consectur adpiscing eit</Card.Text>
       </Card.Body>
       <Card.Footer>
-        Editar
+        <Button variant="link">Editar</Button>
+        <Button variant="link">Eliminar</Button>
       </Card.Footer>
     </Card>
   )
