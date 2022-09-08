@@ -1,12 +1,12 @@
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 
-export default function Service () {
+export default function Service ({name, description}) {
   return (
     <Card>
       <Card.Body>
-        <Card.Title>Electricidad</Card.Title>
-        <Card.Text>Lorem ipsum, dolor sit atmet consectur adpiscing eit</Card.Text>
+        <Card.Title>{name}</Card.Title>
+        <Card.Text>{description}</Card.Text>
       </Card.Body>
       <Card.Footer>
         <Button variant="link">Editar</Button>
