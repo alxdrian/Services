@@ -28,17 +28,14 @@ export default function NavBar () {
   }
 
   return (
-    <Navbar bg="light" expand="lg">
+    <Navbar bg="light" expand={true}>
       <Container>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
-          <Nav>
-            <Nav.Link href="#all" onClick={setAllFilter}>Todos</Nav.Link>
-            <Nav.Link href="#cars" onClick={setCarsFilter}>Autos</Nav.Link>
-            <Nav.Link href="#health" onClick={setHealthFilter}>Salud</Nav.Link>
-            <Nav.Link href="#home" onClick={setHomeFilter}>Hogar</Nav.Link>
-          </Nav>
-        </Navbar.Collapse>
+        <Nav className="me-auto">
+          <Nav.Link href="#all" onClick={setAllFilter}>Todos</Nav.Link>
+          <Nav.Link href="#cars" onClick={setCarsFilter}>Autos</Nav.Link>
+          <Nav.Link href="#health" onClick={setHealthFilter}>Salud</Nav.Link>
+          <Nav.Link href="#home" onClick={setHomeFilter}>Hogar</Nav.Link>
+        </Nav>
       </Container>
     </Navbar>
   )

@@ -4,6 +4,7 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Spinner from 'react-bootstrap/Spinner';
+import Alert from 'react-bootstrap/Alert';
 import Service from './Service';
 import { getAll, getCategoryServices } from "./serviceSlice";
 
@@ -34,6 +35,13 @@ export default function ServiceList () {
 
   return (
     <Container>
+      {services.status.error && 
+        <Alert variant="danger" onClose={(e) => window.location.reload(false)} dismissible>
+          <Alert.Heading>Oh! Tuvimos un error!</Alert.Heading>
+          <p>Code: {services.status.error.code}</p>
+          <p>Message: {services.status.error.message}</p>
+        </Alert>
+      }
       {services.status.loading && <Spinner animation="border" variant="primary" className='position-absolute top-50 start-50 translate-middle' />}
       {services.list.length > 0 &&
         <Row xs={1} md={3} className="g-4">

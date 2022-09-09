@@ -103,6 +103,9 @@ const serviceSlice = createSlice({
       .addCase(addService.fulfilled, (state) => {
         state.services.status = { idle: true }
       })
+      .addCase(addService.rejected, (state, action) => {
+        state.services.status = { error: action.error }
+      })
       // status fetch delete service
       .addCase(deleteService.pending, (state) => {
         state.services.status = { loading: true }
@@ -110,12 +113,18 @@ const serviceSlice = createSlice({
       .addCase(deleteService.fulfilled, (state) => {
         state.services.status = { idle: true }
       })
-      // status fetch delete service
+      .addCase(deleteService.rejected, (state, action) => {
+        state.services.status = { error: action.error }
+      })
+      // status fetch edit service
       .addCase(editService.pending, (state) => {
         state.services.status = { loading: true }
       })
       .addCase(editService.fulfilled, (state) => {
         state.services.status = { idle: true }
+      })
+      .addCase(editService.rejected, (state, action) => {
+        state.services.status = { error: action.error }
       })
       // status fetch all services
       .addCase(getCategoryServices.pending, (state) => {
