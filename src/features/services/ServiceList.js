@@ -4,16 +4,28 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Service from './Service';
-import { getAll } from "./serviceSlice";
+import { getAll, getCategoryServices } from "./serviceSlice";
 
 export default function ServiceList () {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
   const store = useSelector(state => state.service)
   const services = store.services
+  const category = store.category 
 
   useEffect(() => {
     if (services.status.idle) {
-      dispatch(getAll())
+      if (category == 'all') {
+        dispatch(getAll())
+      }
+      if (category == 'cars') {
+        dispatch(getCategoryServices('cars'))
+      }
+      if (category == 'home') {
+        dispatch(getCategoryServices('home'))
+      }
+      if (category == 'health') {
+        dispatch(getCategoryServices('health'))
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [services.status])

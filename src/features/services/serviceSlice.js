@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { createService, deleteServiceById, editServiceById, getAllServices } from '../../api/serviceApi';
+import { createService, deleteServiceById, editServiceById, getAllServices, getServiceByCategory } from '../../api/serviceApi';
 
 const initialForm = {
   mode: { creation: true },
@@ -17,6 +17,7 @@ const initialState = {
     status: { idle: true }
   },
   form: initialForm,
+  category: 'all'
 }
 
 export const getAll = createAsyncThunk(
@@ -51,6 +52,14 @@ export const editService = createAsyncThunk(
   }
 )
 
+export const getCategoryServices = createAsyncThunk(
+  'service/getCategoryService',
+  async(category) => {
+    const response = await getServiceByCategory(category)
+    return response.data
+  }
+)
+
 const serviceSlice = createSlice({
   name: 'service',
   initialState,
@@ -69,6 +78,9 @@ const serviceSlice = createSlice({
     },
     setResetForm: (state) => {
       state.form = initialForm
+    },
+    setCategoryFilter: (state, action) => {
+      state.category = action.payload
     }
   },
   extraReducers: (builder) => {
@@ -105,9 +117,20 @@ const serviceSlice = createSlice({
       .addCase(editService.fulfilled, (state) => {
         state.services.status = { idle: true }
       })
+      // status fetch all services
+      .addCase(getCategoryServices.pending, (state) => {
+        state.services.status = { loading: true }
+      })
+      .addCase(getCategoryServices.fulfilled, (state, action) => {
+        state.services.list = action.payload
+        state.services.status = { succeded: true }
+      })
+      .addCase(getCategoryServices.rejected, (state, action) => {
+        state.services.status = { error: action.error }
+      })
   }
 })
 
-export const { setFormField, setEditionMode, setCreationMode, setSelectedService, setResetForm } = serviceSlice.actions
+export const { setFormField, setEditionMode, setCreationMode, setSelectedService, setResetForm, setCategoryFilter } = serviceSlice.actions
 
 export default serviceSlice.reducer
