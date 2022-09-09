@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import Spinner from 'react-bootstrap/Spinner';
 import Service from './Service';
 import { getAll, getCategoryServices } from "./serviceSlice";
 
@@ -33,7 +34,7 @@ export default function ServiceList () {
 
   return (
     <Container>
-      {services.status.loading && <div>loading</div>}
+      {services.status.loading && <Spinner animation="border" variant="primary" className='position-absolute top-50 start-50 translate-middle' />}
       {services.list.length > 0 &&
         <Row xs={1} md={3} className="g-4">
           {services.list.map(service => 
@@ -44,5 +45,6 @@ export default function ServiceList () {
         </Row>
       }
     </Container>
+    
   )
 }
